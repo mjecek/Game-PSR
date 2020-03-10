@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game PaperScissorsRock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+    <link rel="stylesheet" href="./pSr.css">
+
+</head>
+
+<body>
+    <div id="div-game">
+        <div class="div-input">
+            <label class="label-input"><i class="fas fa-hand-paper"></i> Paper</label>
+            <input name="radio" type="radio" value="0">
+            <label class="label-input"><i class="fas fa-hand-scissors"></i> Scissors</label>
+            <input name="radio" type="radio" value="1">
+            <label class="label-input"><i class="fas fa-hand-rock"></i> Rock</label>
+            <input name="radio" type="radio" value="2">
+        </div>
+        <button id="button-game">Check</button><br><br>
+        <div id="box">
+            <h1>Pick one!!!</h1>
+        </div><br>
+        <div id="box1"></div><br><br>
+        <div id="box2"></div><br><br>
+    </div>
+    <div class="container-folowme">
+        <nav class="nav-fol">
+            <div class="text">
+                <h1>Follow me</h1>
+            </div>
+            <div class="pointing-line"></div>
+            <ul class="nav_list">
+                <li class="nav_item"><a href="#" class="nav_link"><i class="fab fa-facebook-f"></i></a></li_nav>
+                    <li class="nav_item"><a href="#" class="nav_link"><i class="fab fa-twitter"></i></a></li_nav>
+                        <li class="nav_item"><a href="#" class="nav_link"><i class="fab fa-linkedin"></i></a></li_nav>
+            </ul>
+        </nav>
+    </div>
+    <script>
+        const radio = document.getElementsByName('radio');
+        const button = document.getElementById('button-game');
+        const box = document.getElementById('box');
+        const box1 = document.getElementById('box1');
+        const box2 = document.getElementById('box2');
+
+        var judgeMatrix = [
+            [0, 2, 1],
+            [1, 0, 2],
+            [2, 1, 0]
+        ];
+
+        function changeColor() {
+            let poz = Math.round(Math.random() * 2);
+
+            if (poz == 0) {
+                box2.style.color = "blue";
+                poz++;
+            } else {
+                box2.style.color = "red";
+                poz++;
+            }
+        }
+
+        function getSelectedChoice(radioInputs){
+            for(let i = 0; i < radioInputs.length;i++){
+                if(radioInputs[i].checked){
+                    return radioInputs[i].value;
+                }
+            }
+        }
+
+        function getSelectedChoiceString(selectedChoice){
+            switch(selectedChoice){
+                case 0:
+                    return "Paper";
+                case 1:
+                    return "Scissors";
+                case 2:
+                    return "Rock";
+            }
+        }
+
+        function choice() {
+            box.innerHTML = "<h1>Pick one!!!</h1>";
+
+            let selectedChoice = parseInt(getSelectedChoice(radio));
+
+            let randomChoice = Math.floor(Math.random() * 3);
+
+            box.innerHTML = "Your choice is: " + "<b>" + getSelectedChoiceString(selectedChoice) + "</b>";
+            box1.innerHTML = "The choice of computer is: " + "<b>" + getSelectedChoiceString(randomChoice) + "</b>";
+
+            switch (judgeMatrix[selectedChoice][randomChoice]){
+                case 1:
+                    box2.innerHTML = "Won";
+                    break;
+                case 2:
+                    box2.innerHTML = "Lost";
+                    break;
+                case 0:
+                    box2.innerHTML = "Draw";
+                    break;
+            }
+
+        };
+        button.onclick = choice;
+        setInterval(changeColor, 50);
+    </script>
+</body>
+
+</html>
